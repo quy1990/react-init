@@ -13,9 +13,12 @@ class App extends Component {
         super(props);
         this.state = {
             items: contacts.items,
-            isShowForm: true
+            isShowForm: false,
+            strSearch: "",
         }
         this.showAndHideAddForm = this.showAndHideAddForm.bind(this);
+        this.closeFrom = this.closeFrom.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
     }
 
     showAndHideAddForm() {
@@ -24,21 +27,50 @@ class App extends Component {
         })
     }
 
-    render() {
-        let items = this.state.items;
-        let isShowFrom = this.state.isShowForm;
 
+    handleSearch(value) {
+        this.setState({
+            strSearch: value
+        })
+    }
+
+    closeFrom() {
+        this.setState({
+            isShowForm: false
+        })
+    }
+
+    render() {
+        console.log(this.state.strSearch);
+        let itemsOrigin = this.state.items;
+        let items = [];
+        let isShowFrom = this.state.isShowForm;
+        let search = this.state.strSearch;
         let form = null;
 
+        if (search.length > 0) {
+            itemsOrigin.forEach((item) => {
+                    if (item.firstName.toLowerCase().indexOf(search) !== -1) {
+                        items.push(item)
+                    }
+                }
+            );
+        } else {
+            items = itemsOrigin;
+        }
+
         if (isShowFrom) {
-            form = <Form/>
+            form = <Form onClickCancel={this.closeFrom}/>
         }
         return (
             <div>
                 <div className="container mt-3">
                     <Header/>
-                    <Search/>
-                    <ShowButton onClickAdd={this.showAndHideAddForm}/>
+                    <Search onClickSearchGo={this.handleSearch}/>
+                    <ShowButton
+                        onClickAdd={this.showAndHideAddForm}
+                        isShowForm={isShowFrom}
+                    />
                     {form}
                     <Content items={items}/>
                     <Footer/>

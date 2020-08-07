@@ -14,11 +14,16 @@ class ShowButton extends Component {
     }
 
     render() {
+        let elmButton = <button onClick={this.handleAdd} className="btn btn-outline-secondary float-right"
+                                type="button">Show</button>;
+
+        if (this.props.isShowForm) {
+            elmButton = <button onClick={this.handleAdd} className="btn btn-outline-first float-right"
+                                type="button">Close</button>;
+        }
         return (
             <div>
-                <button onClick={this.handleAdd} className="btn btn-outline-secondary float-right" type="button">Show
-                    button
-                </button>
+                {elmButton}
             </div>
         );
     }

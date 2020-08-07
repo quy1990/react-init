@@ -2,6 +2,16 @@ import React, {Component} from "react";
 
 class Form extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {};
+        this.handleCancel = this.handleCancel.bind(this);
+    }
+
+    handleCancel() {
+        this.props.onClickCancel();
+    }
+
     render() {
         return (
             <div>
@@ -17,7 +27,10 @@ class Form extends Component {
                 <input type="text" className="form-control" placeholder="Recipient's Email"
                        aria-label="Recipient's Email"
                        aria-describedby="basic-addon2"/>
-                <button className="btn btn-outline-secondary float-right" type="button">Save</button>
+                <br/>
+                <button type="button" className="btn btn-success float-right">Success</button>
+                <button onClick={this.handleCancel} type="button" className="btn btn-primary">Cancel</button>
+
                 <br/>
                 <br/>
             </div>
