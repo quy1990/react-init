@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
+import Course from "./components/Course";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+    render() {
+        const items = [
+            {
+                name: "abc",
+                time: "12h",
+                free: true
+            },
+            {
+                name: "123 abc",
+                time: "20h",
+                free: true
+            },
+            {
+                name: "456 abc",
+                time: "12h",
+                free: false
+            }
+        ];
+
+        const elementCourses = items.map((item, index) =>
+            <Course key={index} name={item.name} time={item.time} free={item.free}/>
+        );
+
+
+        return (
+            <div className="App">
+                <div className="row">
+                    {elementCourses}
+                </div>
+            </div>
+        )
+            ;
+    }
 }
 
 export default App;
