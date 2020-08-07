@@ -1,36 +1,39 @@
 import React, {Component} from 'react';
 import './App.css';
-import Course from "./components/Course";
+import Search from "./components/Search";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Content from "./components/Content";
+import Form from "./components/Form";
+
+import contacts from "./Data/contacts";
 
 class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            items: contacts.items,
+            isShowForm: true
+        }
+    }
+
     render() {
-        const items = [
-            {
-                name: "abc",
-                time: "12h",
-                free: true
-            },
-            {
-                name: "123 abc",
-                time: "20h",
-                free: true
-            },
-            {
-                name: "456 abc",
-                time: "12h",
-                free: false
-            }
-        ];
+        let items = this.state.items;
+        let isShowFrom = this.state.isShowForm;
 
-        const elementCourses = items.map((item, index) =>
-            <Course key={index} name={item.name} time={item.time} free={item.free}/>
-        );
+        let form = null;
 
-
+        if (isShowFrom) {
+            form = <Form/>
+        }
         return (
-            <div className="App">
-                <div className="row">
-                    {elementCourses}
+            <div>
+                <div className="container mt-3">
+                    <Header/>
+                    <Search/>
+                    {form}
+                    <Content items={items}/>
+                    <Footer/>
                 </div>
             </div>
         )
