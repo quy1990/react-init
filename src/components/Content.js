@@ -10,7 +10,7 @@ class Content extends Component {
     render() {
         const items = this.props.items;
         const row = items.map((item, index) => {
-            return <Item key={index} item={item}/>
+            return <Item onClickDelete={this.props.onClickDelete} key={index} item={item}/>
         })
         return (
             <table className="table table-bordered">
@@ -20,6 +20,7 @@ class Content extends Component {
                     <th>Firstname</th>
                     <th>Lastname</th>
                     <th>Email</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody id="myTable">

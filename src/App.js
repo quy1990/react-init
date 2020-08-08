@@ -8,6 +8,7 @@ import Form from "./components/Form";
 import ShowButton from "./components/ShowButton";
 import contacts from "./Data/contacts";
 
+
 class App extends Component {
     constructor(props) {
         super(props);
@@ -15,10 +16,14 @@ class App extends Component {
             items: contacts.items,
             isShowForm: false,
             strSearch: "",
+            orderBy: 'firstName',
+            orderType: "asc"
         }
         this.showAndHideAddForm = this.showAndHideAddForm.bind(this);
         this.closeFrom = this.closeFrom.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
+        this.handleSort = this.handleSort.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
     }
 
     showAndHideAddForm() {
@@ -40,17 +45,29 @@ class App extends Component {
         })
     }
 
+
+    handleSort(orderType) {
+        //console.log(orderType);
+    }
+
+    handleDelete(id) {
+        const newlist = [].concat(this.state.items) // Clone array with concat or slice(0)
+        newlist.splice(id, 1);
+        console.log(this.state.items);
+        this.setState({
+            items: newlist,
+        })
+    }
+
     render() {
-        console.log(this.state.strSearch);
         let itemsOrigin = this.state.items;
         let items = [];
-        let isShowFrom = this.state.isShowForm;
-        let search = this.state.strSearch;
+        let {isShowFrom, strSearch, orderBy, orderType} = this.state;
         let form = null;
 
-        if (search.length > 0) {
+        if (strSearch.length > 0) {
             itemsOrigin.forEach((item) => {
-                    if (item.firstName.toLowerCase().indexOf(search) !== -1) {
+                    if (item.firstName.toLowerCase().indexOf(strSearch) !== -1) {
                         items.push(item)
                     }
                 }
@@ -66,13 +83,14 @@ class App extends Component {
             <div>
                 <div className="container mt-3">
                     <Header/>
-                    <Search onClickSearchGo={this.handleSearch}/>
+                    <Search onClickSort={this.handleSort} onClickSearchGo={this.handleSearch} orderBy={orderBy}
+                            orderType={orderType}/>
                     <ShowButton
                         onClickAdd={this.showAndHideAddForm}
                         isShowForm={isShowFrom}
                     />
                     {form}
-                    <Content items={items}/>
+                    <Content items={items} onClickDelete={this.handleDelete}/>
                     <Footer/>
                 </div>
             </div>

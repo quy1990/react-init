@@ -4,6 +4,11 @@ class Item extends Component {
     constructor(props) {
         super(props);
         this.state = {};
+        this.handlerDelete = this.handlerDelete.bind(this);
+    }
+
+    handlerDelete(id) {
+        this.props.onClickDelete(id);
     }
 
     render() {
@@ -14,6 +19,10 @@ class Item extends Component {
                 <td>{row.firstName}</td>
                 <td>{row.lastName}</td>
                 <td>{row.email}</td>
+                <td>
+                    <button>edit</button>
+                    <button onClick={() => this.handlerDelete(row.id)}>delete</button>
+                </td>
             </tr>
         )
     }

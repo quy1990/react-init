@@ -6,10 +6,13 @@ class Search extends Component {
         super(props);
         this.state = {
             strSearch: "2132343",
+            orderBy: "firstName",
+            orderType: "asc",
         }
         this.handleSearch = this.handleSearch.bind(this);
         this.handleClear = this.handleClear.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleSort = this.handleSort.bind(this);
     }
 
     handleSearch() {
@@ -29,10 +32,16 @@ class Search extends Component {
         })
     }
 
+    handleSort(event) {
+        this.props.onClickSort(event.target.value);
+    }
+
     render() {
+        let {orderBy, orderType} = this.state;
+        console.log(orderBy + "-" + orderType);
         return (
-            <div>
-                <div className="input-group mb-3">
+            <div className="row">
+                <div className="input-group mb-3 col-6">
                     <input type="text"
                            value={this.state.strSearch}
                            onChange={this.handleChange}
@@ -47,7 +56,14 @@ class Search extends Component {
                         </button>
                     </div>
                 </div>
-                <br/>
+                <div className="input-group mb-3 col-6">
+                    <select onClick={this.handleSort}>
+                        <option value="ASC">firstName - ASC</option>
+                        <option value="DESC">firstName - DESC</option>
+                    </select>
+                    <button className="btn btn-primary" type="button">Filter
+                    </button>
+                </div>
             </div>
         )
     }

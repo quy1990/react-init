@@ -1,6 +1,12 @@
 export default {
     items: [
         {
+            id: 0,
+            firstName: "abc0",
+            lastName: "12h",
+            email: "admin@admin.com"
+        },
+        {
             id: 1,
             firstName: "abc1",
             lastName: "12h",
