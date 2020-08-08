@@ -41,7 +41,7 @@ class Search extends Component {
                            aria-label="Recipient's username"
                            aria-describedby="basic-addon2"/>
                     <div className="input-group-append">
-                        <button onClick={this.handleSearch} className="btn btn-outline-secondary" type="button">Search
+                        <button onClick={this.handleSearch} className="btn btn-primary" type="button">Search
                         </button>
                         <button onClick={this.handleClear} className="btn btn-warning" type="button">clear
                         </button>
