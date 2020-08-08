@@ -24,6 +24,7 @@ class App extends Component {
         this.handleSearch = this.handleSearch.bind(this);
         this.handleSort = this.handleSort.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     showAndHideAddForm() {
@@ -32,6 +33,19 @@ class App extends Component {
         })
     }
 
+    handleSubmit(item) {
+        let items = this.state.items;
+        items.push({
+            id: 5,
+            firstName: item.firstName,
+            lastName: item.lastName,
+            email: item.email,
+        });
+        this.setState({
+            items: items,
+            isShowForm: false
+        })
+    }
 
     handleSearch(value) {
         this.setState({
@@ -53,7 +67,6 @@ class App extends Component {
     handleDelete(id) {
         const newlist = [].concat(this.state.items) // Clone array with concat or slice(0)
         newlist.splice(id, 1);
-        console.log(this.state.items);
         this.setState({
             items: newlist,
         })
@@ -62,8 +75,13 @@ class App extends Component {
     render() {
         let itemsOrigin = this.state.items;
         let items = [];
-        let {isShowFrom, strSearch, orderBy, orderType} = this.state;
+        let {strSearch, orderBy, orderType} = this.state;
+        let isShowFrom = this.state.isShowForm;
         let form = null;
+
+        if (isShowFrom) {
+            form = <Form onClickCancel={this.closeFrom} onClickSubmit={this.handleSubmit}/>
+        }
 
         if (strSearch.length > 0) {
             itemsOrigin.forEach((item) => {
@@ -74,10 +92,6 @@ class App extends Component {
             );
         } else {
             items = itemsOrigin;
-        }
-
-        if (isShowFrom) {
-            form = <Form onClickCancel={this.closeFrom}/>
         }
         return (
             <div>

@@ -37,8 +37,6 @@ class Search extends Component {
     }
 
     render() {
-        let {orderBy, orderType} = this.state;
-        console.log(orderBy + "-" + orderType);
         return (
             <div className="row">
                 <div className="input-group mb-3 col-6">
