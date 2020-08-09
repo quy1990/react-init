@@ -12,22 +12,18 @@ class Form extends Component {
         this.handleCancel = this.handleCancel.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.updateItem = this.updateItem.bind(this);
     }
 
     componentWillMount() {
-        let item = this.props.itemSelected;
-        if (item !== null) {
-            this.setState({
-                id: item.id,
-                firstName: item.firstName,
-                lastName: item.lastName,
-                email: item.email,
-            });
-        }
+        this.updateItem(this.props.itemSelected);
     }
 
     componentWillReceiveProps(nextProps) {
-        let item = nextProps.itemSelected;
+        this.updateItem(nextProps.itemSelected);
+    }
+
+    updateItem(item) {
         if (item !== null) {
             this.setState({
                 id: item.id,
@@ -38,11 +34,11 @@ class Form extends Component {
         }
     }
 
-    handleCancel() {
+    handleCancel = () => {
         this.props.onClickCancel();
     }
 
-    handleChange(event) {
+    handleChange = (event) => {
         const target = event.target;
         const name = target.name;
         const value = target.value;
@@ -51,7 +47,7 @@ class Form extends Component {
         });
     }
 
-    handleSubmit(event) {
+    handleSubmit = (event) => {
         let item = {
             id: this.state.id,
             firstName: this.state.firstName,

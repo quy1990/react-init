@@ -29,6 +29,13 @@ class App extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    componentWillMount() {
+        let items = JSON.parse(localStorage.getItem("contacts"));
+        this.setState({
+            items: items === null ? contacts.items : items,
+        });
+    }
+
     showAndHideAddForm() {
         this.setState({
             isShowForm: !this.state.isShowForm,
@@ -57,7 +64,8 @@ class App extends Component {
         this.setState({
             items: items,
             isShowForm: false
-        })
+        });
+        localStorage.setItem("contacts", JSON.stringify(items));
     }
 
     handleSearch(value) {
@@ -72,7 +80,6 @@ class App extends Component {
         })
     }
 
-
     handleSort(orderType) {
         //console.log(orderType);
     }
@@ -86,11 +93,13 @@ class App extends Component {
     }
 
     handleDelete(id) {
+        console.log("delete =" + id);
         const newlist = [].concat(this.state.items) // Clone array with concat or slice(0)
-        newlist.splice(id, 1);
+        newlist.splice(this.state.items.indexOf(id), 1);
         this.setState({
             items: newlist,
-        })
+        });
+        localStorage.setItem("contacts", JSON.stringify(this.state.items));
     }
 
     render() {
