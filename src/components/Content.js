@@ -6,11 +6,15 @@ class Content extends Component {
         super(props);
         this.state = {};
     }
-
     render() {
         const items = this.props.items;
         const row = items.map((item, index) => {
-            return <Item onClickDelete={this.props.onClickDelete} key={index} item={item}/>
+            return <Item
+                key={index}
+                onClickEdit={this.props.onClickEdit}
+                onClickDelete={this.props.onClickDelete}
+                item={item}
+            />
         })
         return (
             <table className="table table-bordered">

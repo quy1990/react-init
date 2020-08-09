@@ -4,6 +4,7 @@ class Form extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: "",
             firstName: "",
             lastName: "",
             email: ""
@@ -11,6 +12,30 @@ class Form extends Component {
         this.handleCancel = this.handleCancel.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    componentWillMount() {
+        let item = this.props.itemSelected;
+        if (item !== null) {
+            this.setState({
+                id: item.id,
+                firstName: item.firstName,
+                lastName: item.lastName,
+                email: item.email,
+            });
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        let item = nextProps.itemSelected;
+        if (item !== null) {
+            this.setState({
+                id: item.id,
+                firstName: item.firstName,
+                lastName: item.lastName,
+                email: item.email,
+            });
+        }
     }
 
     handleCancel() {
@@ -28,6 +53,7 @@ class Form extends Component {
 
     handleSubmit(event) {
         let item = {
+            id: this.state.id,
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             email: this.state.email
@@ -37,6 +63,7 @@ class Form extends Component {
     }
 
     render() {
+
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>

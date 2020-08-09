@@ -14,6 +14,7 @@ class App extends Component {
         super(props);
         this.state = {
             items: contacts.items,
+            itemSelected: null,
             isShowForm: false,
             strSearch: "",
             orderBy: 'firstName',
@@ -24,23 +25,35 @@ class App extends Component {
         this.handleSearch = this.handleSearch.bind(this);
         this.handleSort = this.handleSort.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
+        this.handleEdit = this.handleEdit.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     showAndHideAddForm() {
         this.setState({
-            isShowForm: !this.state.isShowForm
+            isShowForm: !this.state.isShowForm,
+            itemSelected: null,
         })
     }
 
     handleSubmit(item) {
         let items = this.state.items;
-        items.push({
-            id: 5,
-            firstName: item.firstName,
-            lastName: item.lastName,
-            email: item.email,
-        });
+        if (item.id !== "") { // edit
+            items.forEach((element, key) => {
+                if (element.id === item.id) {
+                    items[key].firstName = item.firstName;
+                    items[key].lastName = item.lastName;
+                    items[key].email = item.email;
+                }
+            });
+        } else { //add
+            items.push({
+                id: items.length + 1,
+                firstName: item.firstName,
+                lastName: item.lastName,
+                email: item.email,
+            });
+        }
         this.setState({
             items: items,
             isShowForm: false
@@ -64,6 +77,14 @@ class App extends Component {
         //console.log(orderType);
     }
 
+    handleEdit(item) {
+        console.log(item);
+        this.setState({
+            itemSelected: item,
+            isShowForm: true,
+        })
+    }
+
     handleDelete(id) {
         const newlist = [].concat(this.state.items) // Clone array with concat or slice(0)
         newlist.splice(id, 1);
@@ -75,12 +96,15 @@ class App extends Component {
     render() {
         let itemsOrigin = this.state.items;
         let items = [];
-        let {strSearch, orderBy, orderType} = this.state;
+        let {strSearch, orderBy, orderType, itemSelected} = this.state;
         let isShowFrom = this.state.isShowForm;
         let form = null;
 
         if (isShowFrom) {
-            form = <Form onClickCancel={this.closeFrom} onClickSubmit={this.handleSubmit}/>
+            form = <Form
+                itemSelected={itemSelected}
+                onClickCancel={this.closeFrom}
+                onClickSubmit={this.handleSubmit}/>
         }
 
         if (strSearch.length > 0) {
@@ -104,7 +128,11 @@ class App extends Component {
                         isShowForm={isShowFrom}
                     />
                     {form}
-                    <Content items={items} onClickDelete={this.handleDelete}/>
+                    <Content
+                        items={items}
+                        onClickEdit={this.handleEdit}
+                        onClickDelete={this.handleDelete}
+                    />
                     <Footer/>
                 </div>
             </div>
